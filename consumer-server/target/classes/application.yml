@@ -1,0 +1,14 @@
+server:
+  port: 10000
+
+spring:
+  application:
+    name: consumer-server
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8080/eureka
+  instance:
+    prefer-ip-address: true #调用getHostname 返回ip 而不是hostname
+    ip-address: 127.0.0.1 #指定自己的ip，不指定会自己寻找。
