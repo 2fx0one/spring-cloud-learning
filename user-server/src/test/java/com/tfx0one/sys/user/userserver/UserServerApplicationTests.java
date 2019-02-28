@@ -1,4 +1,4 @@
-package com.tfx0one.springcloudlearning;
+package com.tfx0one.sys.user.userserver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringCloudLearningApplicationTests {
+public class UserServerApplicationTests {
 
     @Test
     public void contextLoads() {
