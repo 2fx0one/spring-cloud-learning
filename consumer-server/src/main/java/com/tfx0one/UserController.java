@@ -1,6 +1,7 @@
 package com.tfx0one;
 
 import com.netflix.discovery.converters.Auto;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,23 +10,26 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /*
  * @Auth 2fx0one
  * 2019/3/2 23:16
  */
 @RestController
+@DefaultProperties(defaultFallback = "defaultFallback")
 public class UserController {
 
 
-    @Autowired
-    private RestTemplate restTemplate;
+    @Resource
+    private UserFeignClient userFeignClient;
 
     @GetMapping("/hello/{id}")
+//    @HystrixCommand(fallbackMethod = "fallbackHello")
 //    @HystrixCommand(fallbackMethod = "fallbackHello",
-    @HystrixCommand(commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
-    })
+//            commandProperties = {
+//                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
+//            })
     public String hello(@PathVariable String id) {
 //        User u = restTemplate.getForObject("http://127.0.0.1:10001/sys/user/1", User.class);
 //        1、从注册中心获取实例
@@ -34,14 +38,22 @@ public class UserController {
 //        System.out.println(instance);
 //        String baseUrl = "http://"+instance.getHost() + ":" + instance.getPort()+"/sys/user/1";
 //        2。 开启 Robbin负载均衡 loadBalanced
-        String baseUrl = "http://user-server" + "/sys/user/" + id;
-        System.out.println(baseUrl);
-        User u = restTemplate.getForObject(baseUrl, User.class);
-        System.out.println(u);
+        long begin = System.currentTimeMillis();
+//        String baseUrl = "http://user-server" + "/sys/user/" + id;
+//        System.out.println(baseUrl);
+//        User u = restTemplate.getForObject(baseUrl, User.class);
+        User u = userFeignClient.getById("1");
+        long end = System.currentTimeMillis();
+        System.out.println("访问用时：" + (end - begin));
+
         return u.getName();
     }
 
     public String fallbackHello(String id) {
         return "网络拥挤！";
+    }
+
+    public String defaultFallback() {
+        return "defalut 网络拥挤！";
     }
 }

@@ -12,19 +12,32 @@ spring:
 user-server:
   ribbon:
     ConnectTimeout: 250 # Ribbon 超时时间
-    ReadTimeout: 1000
+    ReadTimeout: 1000 # 注意这里时间必须设定的必须小于 hystrix 的超时时间。
     OkToRetryOnAllOperations: true #是否所有操作都可以重试
     MaxAutoRetriesNextServer: 1 #切换实例的重试次数
     MaxAutoRetries: 1 #当前实例重试次数
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #随机获取服务的规则
 
+feign:
+  hystrix:
+    enabled: true # 开启Feign的熔断功能
+  compression:
+    request:
+      enabled: true # 开启请求压缩
+      mime-types: text/html,application/xml,application/json # 设置压缩的数据类型
+      min-request-size: 2048 # 设置触发压缩的大小下限
+    response:
+      enabled: true # 开启响应压缩
+
+#断路器的超时时间需要大于Ribbon的超时时间，不然不会触发重试。
+# 这里配置的是 default 配合注解 @DefaultProperties(defaultFallback = "defaultFallback")
 hystrix:
   command:
     default:
       execution:
         isolation:
           thread:
-            timeoutInMillisecond: 4000 # 设置hystrix的超时时间为6000ms
+            timeoutInMillisecond: 1500 # 设置hystrix的超时时间为3000ms 注意这里是 default
 
 eureka:
   client:
