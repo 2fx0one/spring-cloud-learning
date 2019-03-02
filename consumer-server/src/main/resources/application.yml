@@ -16,6 +16,7 @@ user-server:
     OkToRetryOnAllOperations: true #是否所有操作都可以重试
     MaxAutoRetriesNextServer: 1 #切换实例的重试次数
     MaxAutoRetries: 1 #当前实例重试次数
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #随机获取服务的规则
 
 hystrix:
   command:
@@ -27,6 +28,7 @@ hystrix:
 
 eureka:
   client:
+    registry-fetch-interval-seconds: 30 #拉去服务列表间隔时间。
     service-url:
       defaultZone: http://127.0.0.1:10086/eureka
   instance:
@@ -43,3 +45,4 @@ logging:
 #    com: debug
 #    org: debug
     c.n: debug
+
