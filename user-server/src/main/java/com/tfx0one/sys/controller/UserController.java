@@ -31,6 +31,11 @@ public class UserController extends BaseController {
 
     @GetMapping("{id}")
     public User hello(@PathVariable String id) {
+        try {
+            Thread.sleep(2000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return userService.getById(id);
     }
 }

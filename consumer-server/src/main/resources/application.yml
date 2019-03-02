@@ -7,15 +7,23 @@ spring:
   cloud:
     loadbalancer:
       retry:
-        enabled: true
+        enabled: true # 开启重试机制
 
 user-server:
   ribbon:
-    ConnectTimeout: 250 #Ribbon 超时时间
+    ConnectTimeout: 250 # Ribbon 超时时间
     ReadTimeout: 1000
     OkToRetryOnAllOperations: true #是否所有操作都可以重试
     MaxAutoRetriesNextServer: 1 #切换实例的重试次数
     MaxAutoRetries: 1 #当前实例重试次数
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 4000 # 设置hystrix的超时时间为6000ms
 
 eureka:
   client:
@@ -24,9 +32,14 @@ eureka:
   instance:
     prefer-ip-address: true #调用getHostname 返回ip 而不是hostname
     ip-address: 127.0.0.1 #指定自己的ip，不指定会自己寻找。
-    lease-expiration-duration-in-seconds: 10 # 10秒即过期
-    lease-renewal-interval-in-seconds: 5 # 5秒一次心跳
+#    lease-expiration-duration-in-seconds: 10 # 10秒即过期
+#    lease-renewal-interval-in-seconds: 5 # 5秒一次心跳
     instance-id: ${spring.application.name}:${server.port}
 ribbon:
   eureka:
     enabled: true
+logging:
+  level:
+#    com: debug
+#    org: debug
+    c.n: debug
