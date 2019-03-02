@@ -7,26 +7,26 @@ spring:
   cloud:
     loadbalancer:
       retry:
-        enabled: true
-
-user-server:
-  ribbon:
-    ConnectTimeout: 250 #Ribbon 超时时间
-    ReadTimeout: 1000
-    OkToRetryOnAllOperations: true #是否所有操作都可以重试
-    MaxAutoRetriesNextServer: 1 #切换实例的重试次数
-    MaxAutoRetries: 1 #当前实例重试次数
-
+        enabled: true # 开启Spring Cloud的重试功能
 eureka:
   client:
+    registry-fetch-interval-seconds: 30 #拉去服务列表间隔时间。
     service-url:
       defaultZone: http://127.0.0.1:10086/eureka
   instance:
     prefer-ip-address: true #调用getHostname 返回ip 而不是hostname
     ip-address: 127.0.0.1 #指定自己的ip，不指定会自己寻找。
-    lease-expiration-duration-in-seconds: 10 # 10秒即过期
-    lease-renewal-interval-in-seconds: 5 # 5秒一次心跳
-    instance-id: ${spring.application.name}:${server.port}
-ribbon:
-  eureka:
-    enabled: true
+#    lease-expiration-duration-in-sec onds: 90 # 10秒即过期
+#    lease-renewal-interval-in-seconds: 30 # 5秒一次心跳
+#    instance-id: ${spring.application.name}:${server.port}
+
+
+
+user-server:
+  ribbon:
+    ConnectTimeout: 250 # Ribbon的连接超时时间
+    ReadTimeout: 1000 # Ribbon的数据读取超时时间
+    OkToRetryOnAllOperations: true # 是否对所有操作都进行重试
+    MaxAutoRetriesNextServer: 1 # 切换实例的重试次数
+    MaxAutoRetries: 1 # 对当前实例的重试次数
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #随机获取服务的规则

@@ -8,9 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -22,7 +20,8 @@ import java.util.List;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@RequestMapping("/consumer")
+@RestController
+@RequestMapping
 public class ConsumerApplication {
 
     @Bean
@@ -34,12 +33,13 @@ public class ConsumerApplication {
     @Resource
     private RestTemplate restTemplate;
 
-    @Resource
-    private DiscoveryClient discoveryClient;
+//    @Resource
+//    private DiscoveryClient discoveryClient;
 
-    @GetMapping("/hello")
+    @GetMapping("/hello/{id}")
     @ResponseBody
-    public String hello() {
+    public String hello(@PathVariable String id) {
+        System.out.println(id);
 //        User u = restTemplate.getForObject("http://127.0.0.1:10001/sys/user/1", User.class);
 //        1、从注册中心获取实例
 //        List<ServiceInstance> list = discoveryClient.getInstances("user-server");
