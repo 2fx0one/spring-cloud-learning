@@ -33,7 +33,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMillisecond: 3000 # 设置hystrix的超时时间为3000ms 注意这里是 default
+            timeoutInMillisecond: 6000 # 设置hystrix的超时时间为3000ms 注意这里是 default
 
 eureka:
   client:

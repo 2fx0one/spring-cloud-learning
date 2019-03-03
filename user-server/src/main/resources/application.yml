@@ -2,13 +2,14 @@ server:
   port: 20000
 
 spring:
+  application:
+    name: user-service # 服务名 显示给 eureka
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/base_web?useUnicode=true&characterEncoding=utf-8&useSSL=false&tinyInt1isBit=false&serverTimezone=UTC
     username: root
     password: 123456
-  application:
-    name: user-service # 服务名 显示给 eureka
+
 
 mybatis-plus:
   mapper-locations: classpath:*/mapper/*Mapper.xml
