@@ -4,18 +4,14 @@ server:
 spring:
   application:
     name: consumer-server
-  cloud:
-    loadbalancer:
-      retry:
-        enabled: true # 开启重试机制
 
-user-server:
-  ribbon:
-    ConnectTimeout: 250 # Ribbon 超时时间
-    ReadTimeout: 1000 # 注意这里时间必须设定的必须小于 hystrix 的超时时间。
-    OkToRetryOnAllOperations: true #是否所有操作都可以重试
-    MaxAutoRetriesNextServer: 1 #切换实例的重试次数
-    MaxAutoRetries: 1 #当前实例重试次数
+#user-service:
+ribbon:
+  ConnectTimeout: 250 # Ribbon 超时时间
+  ReadTimeout: 2000 # 注意这里时间必须设定的必须小于 hystrix 的超时时间。
+#  OkToRetryOnAllOperations: true #是否所有操作都可以重试
+#  MaxAutoRetriesNextServer: 1 #切换实例的重试次数
+#  MaxAutoRetries: 1 #当前实例重试次数
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #随机获取服务的规则
 
 feign:
@@ -37,7 +33,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMillisecond: 1500 # 设置hystrix的超时时间为3000ms 注意这里是 default
+            timeoutInMillisecond: 3000 # 设置hystrix的超时时间为3000ms 注意这里是 default
 
 eureka:
   client:
@@ -50,9 +46,7 @@ eureka:
 #    lease-expiration-duration-in-seconds: 10 # 10秒即过期
 #    lease-renewal-interval-in-seconds: 5 # 5秒一次心跳
     instance-id: ${spring.application.name}:${server.port}
-ribbon:
-  eureka:
-    enabled: true
+
 logging:
   level:
 #    com: debug

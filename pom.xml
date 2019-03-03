@@ -6,6 +6,7 @@
         <module>eureka-server</module>
         <module>user-server</module>
         <module>consumer-server</module>
+        <module>gateway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

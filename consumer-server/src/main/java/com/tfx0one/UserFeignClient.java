@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Auth 2fx0one
  * 2019/3/3 00:46
  */
-@FeignClient("user-server")
+@FeignClient(value = "user-service", fallback = UserFeginFallBack.class)
 public interface UserFeignClient {
 
-    @GetMapping("/user/{id}")
-    User getById(@PathVariable String id) ;
+    @GetMapping("/sys/user/{id}")
+    User getById(@PathVariable("id") String id) ;
 
 }
