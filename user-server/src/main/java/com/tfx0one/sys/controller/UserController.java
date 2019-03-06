@@ -31,6 +31,7 @@ public class UserController extends BaseController {
 
     @GetMapping("{id}")
     public User hello(@PathVariable String id) {
+
         try {
             Thread.sleep(1500L);
         } catch (InterruptedException e) {

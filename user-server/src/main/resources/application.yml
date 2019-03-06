@@ -26,4 +26,4 @@ eureka:
     ip-address: 127.0.0.1 #指定自己的ip，不指定会自己寻找。
 #    lease-expiration-duration-in-seconds: 10 # 10秒即过期
 #    lease-renewal-interval-in-seconds: 5 # 5秒一次心跳
-#    instance-id: ${spring.application.name}:${server.port}
+    instance-id: ${spring.application.name}:${server.port}
